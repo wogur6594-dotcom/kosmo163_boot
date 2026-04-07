@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- FQDN 사용할 DAO의 클래스명을 풀패키지명으로 작성 -->
+<mapper namespace="com.jh.app.department.DepartmentDAO">
+	<!-- 쿼리 태크 -->
+	<!-- ID : DAO에서 사용할 메서드명을 ID로 작성 -->
+	<!-- 컬럼명과 resultType의 Bean의 Setter이름이 같은걸 찾아서 대입 -->
+	<select id="list"
+		resultType="com.jh.app.department.DepartmentDTO"><!-- 풀패키지명으로 써야함 -->
+		SELECT * FROM TB_DEPARTMENT
+	</select>
+
+	<select id="detail" parameterType="java.lang.String"
+		resultType="com.jh.app.department.DepartmentDTO">
+		<!-- parameterType=#{DAO에서 보내준 변수명} / String이나 primitive Type은 DAO에서 보낸 
+			변수명 사용 -->
+		SELECT * FROM TB_DEPARTMENT WHERE DEPARTMENT_NO = #{num}
+	</select>
+
+	<!-- 새로운 학과 추가 -->
+	<!-- INSERT, UPDATE, DELETE는 resultType이 없다 -->
+	<!-- 결과물은 숫자(int)로 리턴을 함 -->
+	<insert id="create"
+		parameterType="com.jh.app.department.DepartmentDTO"><!-- 타입은 하나만 보낼수 있음,, DTO로 -->
+		<!-- Bean의 Getter의 이름을 #{}에 작성 -->
+		INSERT INTO TB_DEPARTMENT
+		VALUES (
+		#{departmentNo},
+		#{departmentName},
+		#{category},
+		#{openYn},
+		#{capacity})
+	</insert>
+
+	<delete id="delete"
+		parameterType="com.jh.app.department.DepartmentDTO">
+		DELETE FROM TB_DEPARTMENT WHERE DEPARTMENT_NO=#{departmentNo}
+	</delete>
+
+	<update id="update" parameterType="com.jh.app.department.DepartmentDTO">
+  		UPDATE TB_DEPARTMENT 
+  		SET
+  			DEPARTMENT_NAME=#{departmentName},
+  			CATEGORY=#{category},
+  			OPEN_YN=#{openYn},
+  			CAPACITY=#{capacity}
+  		WHERE DEPARTMENT_NO=#{departmentNo}
+  	</update>
+
+
+</mapper>
