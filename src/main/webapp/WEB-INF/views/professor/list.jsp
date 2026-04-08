@@ -36,7 +36,7 @@
 								<tbody>
 									<c:forEach items="${list}" var="d">
 										<tr>
-											<td>${d.professorNo}</td>
+											<td><a href="./detail?professorNo=${d.professorNo}">${d.professorNo}</td>
 											<td>${d.professorName}</td>
 											<td>${d.departmentNo}</td>
 											<!-- el 안에서 ==, eq / !=, ne -->
