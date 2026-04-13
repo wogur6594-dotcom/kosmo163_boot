@@ -19,16 +19,26 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-gray-800">professor List Page</h1>
+					<h1 class="h3 mb-4 text-gray-800">공지사항</h1>
 
-					<!-- 그룹을 위해 div태그 준비 -->
+					<!-- 테이블 DIV 시작 -->
 					<div class="row justify-content-center">
-						<div class="col-12">
-							<!-- 테이블 div 시작 -->
+						<div class="col-6">
+							<!-- 검색 폼 -->
+
 							<div>
 								<form action="./list" method="get">
 									<div class="input-group mb-3">
-										<input type="text" name="search" class="form-control"
+
+										<div class="input-group-prepend">
+											<select name="kind" class="custom-select">
+												<option ${pager.kind eq 'v1'?'selected':''} value="v1">Title</option>
+												<option ${pager.kind eq 'v2'?'selected':''} value="v2">Contents</option>
+												<option ${pager.kind eq 'v3'?'selected':''} value="v3">Writer</option>
+											</select>
+										</div>
+
+										<input type="text" value="${pager.search}" name="search" class="form-control"
 											placeholder="Recipient's username"
 											aria-label="Recipient's username"
 											aria-describedby="button-addon2">
@@ -42,24 +52,33 @@
 
 						</div>
 
-						<table class="table table-bordered w-50 mx-auto">
-							<thead>
-								<tr class="table-dark">
-									<th>PROFESSORNO</th>
-									<th>PROFESSOR_NAME</th>
-									<th>DEPARTMENT_NO</th>
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th>No</th>
+									<th>Title</th>
+									<th>Writer</th>
+									<th>Date</th>
+									<th>Hit</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${list}" var="d">
 									<tr>
-										<td>${d.professorNo}</td>
-										<td>${d.professorName}</td>
-										<td>${d.departmentNo}</td>
+										<td>${d.boardNum}</td>
+										<td>${d.boardTitle}</td>
+										<td>${d.boardWriter}</td>
+										<td>${d.boardDate}</td>
+										<td>${d.boardHit}</td>
 
+										<%-- <c:if test="${d.openYn ne 'Y'}">
+		                    			<td>OPEN</td>
+		                    			</c:if>
+		                    			<c:if test="${d.openYn eq 'N'}">
+		                    			<td>CLOSE</td>
+		                    			</c:if> --%>
 
 									</tr>
-
 								</c:forEach>
 							</tbody>
 						</table>
@@ -69,7 +88,7 @@
 								<ul class="pagination">
 									<li class="page-item ${pager.pre?'':'disabled'}"><a
 										class="page-link"
-										href="./list?page=${pager.pre?pager.start-1:pager.start}&search=${pager.search}"
+										href="./list?page=${pager.pre?pager.start-1:pager.start}&search=${pager.search}&kind=${pager.kind}"
 										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 									</a></li>
 									<c:forEach begin="${pager.start}" end="${pager.end}" var="i">
@@ -79,7 +98,7 @@
 
 									<li class="page-item ${pager.next?'':'disabled'}"><a
 										class="page-link"
-										href="./list?page=${pager.next?pager.end+1:pager.end}&search=${pager.search}"
+										href="./list?page=${pager.next?pager.end+1:pager.end}&search=${pager.search}&kind=${pager.kind}"
 										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 									</a></li>
 								</ul>
@@ -88,11 +107,13 @@
 
 						</div>
 
-
+						<div>
+							<a href="./create">공지 등록</a>
+						</div>
 
 					</div>
-					<!-- 테이블 div 끝 -->
 				</div>
+				<!-- 테이블 DIV 끝 -->
 
 			</div>
 			<!-- End Page container-fluid -->

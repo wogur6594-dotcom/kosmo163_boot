@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jh.app.professor.ProfessorDTO;
+import com.jh.app.page.Pager;
 
 @Controller
 @RequestMapping("/professor/*")
@@ -21,8 +22,8 @@ public class ProfessorController {
 
 	@GetMapping("list")
 	// 리퀘스트 대신 인터페이스 모델 모델=jsp로 운반 해주는 객체, 생명주기는 리퀘스트와 같다
-	public ModelAndView list(ModelAndView mv) throws Exception {
-		List<ProfessorDTO> ar = professorService.list();
+	public ModelAndView list(Pager pager, ModelAndView mv) throws Exception {
+		List<ProfessorDTO> ar = professorService.list(pager);
 
 		// request와 비슷한 역할, Spring이 제공
 		mv.addObject("list", ar);
@@ -68,6 +69,7 @@ public class ProfessorController {
 
 	}
 
+	@PostMapping("update")
 	public String update(ProfessorDTO professorDTO) throws Exception {
 
 		int result = professorService.update(professorDTO);
