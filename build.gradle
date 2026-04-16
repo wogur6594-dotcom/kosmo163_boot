@@ -20,10 +20,10 @@ repositories {
 
 dependencies {
 
-	implementation("com.oracle.database.jdbc:ojdbc11:23.26.1.0.0")
 
-	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5")
+	implementation("com.oracle.database.jdbc:ojdbc11:23.26.1.0.0")
 	
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5")
 	
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
@@ -34,7 +34,6 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
-	//*jsp*
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper' 
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
     runtimeOnly 'org.glassfish.web:jakarta.servlet.jsp.jstl'
@@ -43,9 +42,8 @@ dependencies {
  eclipse {
     wtp {
         facet {
-            facet name: 'jst.web', version: '6.0' // 또는 사용하려는 Dynamic Web Module 버전
-            //facet name: 'jst.java', version: '21' // 사용 중인 Java 버전
-            // 다른 필요한 Facet도 여기에 추가할 수 있습니다.
+            facet name: 'jst.web', version: '6.0'
+            
         }
     }
 }

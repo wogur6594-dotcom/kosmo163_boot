@@ -19,110 +19,41 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-gray-800">공지사항</h1>
-
-					<!-- 테이블 DIV 시작 -->
-					<div class="row justify-content-center">
-						<div class="col-6">
-							<!-- 검색 폼 -->
-
-							<div>
-								<form action="./list" method="get">
-									<div class="input-group mb-3">
-
-										<div class="input-group-prepend">
-											<select name="kind" class="custom-select">
-												<option ${pager.kind eq 'v1'?'selected':''} value="v1">Title</option>
-												<option ${pager.kind eq 'v2'?'selected':''} value="v2">Contents</option>
-												<option ${pager.kind eq 'v3'?'selected':''} value="v3">Writer</option>
-											</select>
-										</div>
-
-										<input type="text" value="${pager.search}" name="search" class="form-control"
-											placeholder="Recipient's username"
-											aria-label="Recipient's username"
-											aria-describedby="button-addon2">
-										<div class="input-group-append">
-											<button class="btn btn-outline-secondary" type="submit"
-												id="button-addon2">Search</button>
-										</div>
-								</form>
-
-							</div>
-
-						</div>
-
-						<table class="table">
-							<thead class="thead-dark">
-								<tr>
-									<th>No</th>
-									<th>Title</th>
-									<th>Writer</th>
-									<th>Date</th>
-									<th>Hit</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${list}" var="d">
-									<tr>
-										<td>${d.boardNum}</td>
-										<td>${d.boardTitle}</td>
-										<td>${d.boardWriter}</td>
-										<td>${d.boardDate}</td>
-										<td>${d.boardHit}</td>
-
-										<%-- <c:if test="${d.openYn ne 'Y'}">
-		                    			<td>OPEN</td>
-		                    			</c:if>
-		                    			<c:if test="${d.openYn eq 'N'}">
-		                    			<td>CLOSE</td>
-		                    			</c:if> --%>
-
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+					<h1 class="h3 mb-4 text-gray-800">Detail Page</h1>
+					<div>
+						<h3>${dto.boardTitle}</h3>
+						<h3>${dto.boardWriter}</h3>
+						<div>${dto.boardContents}</div>
 
 						<div>
-							<nav aria-label="Page navigation example">
-								<ul class="pagination">
-									<li class="page-item ${pager.pre?'':'disabled'}"><a
-										class="page-link"
-										href="./list?page=${pager.pre?pager.start-1:pager.start}&search=${pager.search}&kind=${pager.kind}"
-										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<c:forEach begin="${pager.start}" end="${pager.end}" var="i">
-										<li class="page-item"><a class="page-link"
-											href="./list?page=${i}&search=${pager.search}">${i}</a></li>
-									</c:forEach>
-
-									<li class="page-item ${pager.next?'':'disabled'}"><a
-										class="page-link"
-										href="./list?page=${pager.next?pager.end+1:pager.end}&search=${pager.search}&kind=${pager.kind}"
-										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-									</a></li>
-								</ul>
-							</nav>
-
-
-						</div>
-
-						<div>
-							<a href="./create">공지 등록</a>
+							<c:forEach items="${dto.list}" var="f">
+								<h4>
+									<img src="/files/notice/${f.fileName}">
+								</h4>
+							</c:forEach>
 						</div>
 
 					</div>
+
+					<div>
+						<a href="./reply?boardNum=${dto.boardNum}">답글</a> <a
+							class="btn btn-outline-primary"
+							href="./update?boardNum=${dto.boardNum}">학과수정</a>
+						<form action="./delete" method="post">
+							<input type="hidden" name="boardNum" value="${dto.boardNum}">
+							<button class="btn btn-outline-danger" type="submit">DELETE</button>
+						</form>
+					</div>
+
+
 				</div>
-				<!-- 테이블 DIV 끝 -->
+				<!-- End Page container-fluid -->
 
 			</div>
-			<!-- End Page container-fluid -->
-
+			<!-- End page Content -->
+			<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
 		</div>
-		<!-- End page Content -->
-		<c:import url="/WEB-INF/views/temp/footer.jsp"></c:import>
-	</div>
-	<!-- End Content wrapper -->
+		<!-- End Content wrapper -->
 	</div>
 	<!-- End Wrapper -->
 
